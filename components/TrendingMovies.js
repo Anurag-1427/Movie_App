@@ -7,12 +7,14 @@ import {
 } from 'react-native';
 import React from 'react';
 import Carousel from 'react-native-snap-carousel';
+import {useNavigation} from '@react-navigation/native';
 
 var {width, height} = Dimensions.get('window');
 
 const TrendingMovies = ({data}) => {
+  const navigation = useNavigation();
   const handleClick = item => {
-    console.log('trending movies handle click');
+    navigation.navigate('Movie', item);
   };
   return (
     <View className="mb-8">
@@ -35,8 +37,11 @@ const TrendingMovies = ({data}) => {
 export default TrendingMovies;
 
 const MovieCard = ({item, handleClick}) => {
+  const handlePress = () => {
+    handleClick(item);
+  };
   return (
-    <TouchableWithoutFeedback onPress={handleClick(item)}>
+    <TouchableWithoutFeedback onPress={handlePress}>
       <Image
         source={require('../assets/images/moviePoster1.png')}
         style={{width: width * 0.6, height: height * 0.4}}
