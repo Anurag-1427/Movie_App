@@ -14,6 +14,7 @@ const Loading = () => {
         thickness={12}
         size={160}
         color={theme.background}
+        direction="clockwise"
       />
     </View>
   );
