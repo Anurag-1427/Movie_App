@@ -17,6 +17,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import Loading from '../components/Loading';
 import MovieList from '../components/MovieList';
 import Cast from '../components/Cast';
+import {
+  fallbackMoviePoster,
+  fetchMovieCredits,
+  fetchMovieDetails,
+  fetchSimilarMovies,
+  image500,
+} from '../api/moviedb';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
@@ -24,17 +31,39 @@ const topMargin = ios ? '' : ' mt-3';
 
 const MovieScreen = () => {
   const [isFavourite, toggleFavourite] = useState(false);
-  const [cast, setCast] = useState([1, 2, 3, 4, 5]);
-  const [similarMovies, setSimilarMovies] = useState([1, 2, 3, 4, 5]);
-  const [loading, setLoading] = useState(false);
+  const [cast, setCast] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [movie, setMovie] = useState({});
   const {params: item} = useRoute();
   const navigation = useNavigation();
 
   let movieName = 'Ant-Man and the Wasp: Quantumania';
 
   useEffect(() => {
-    //   // call the movie detail api
+    console.log(`item id====>`, item?.id);
+    getMovieDetails(item?.id);
+    getMovieCredits(item?.id);
+    getSimilarMovies(item?.id);
+    setLoading(false);
   }, [item]);
+
+  const getMovieDetails = async id => {
+    const data = await fetchMovieDetails(id);
+    console.log(`get movie details in movieScreen===>`, data);
+    if (data) setMovie(data);
+  };
+  const getMovieCredits = async id => {
+    const data = await fetchMovieCredits(id);
+    console.log(`get movie credits in movieScreen===>`, data);
+    if (data?.cast) setCast(data?.cast);
+  };
+  const getSimilarMovies = async id => {
+    const data = await fetchSimilarMovies(id);
+    console.log(`get similar movies in movieScreen===>`, data);
+    if (data?.results) setSimilarMovies(data?.results);
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{paddingBottom: 20}}
@@ -64,7 +93,8 @@ const MovieScreen = () => {
         ) : (
           <View>
             <Image
-              source={require('../assets/images/moviePoster2.png')}
+              //   source={require('../assets/images/moviePoster2.png')}
+              source={{uri: image500(item?.poster_path) || fallbackMoviePoster}}
               style={{width, height: height * 0.55}}
             />
             <LinearGradient
@@ -77,43 +107,42 @@ const MovieScreen = () => {
           </View>
         )}
       </View>
-
       {/* movie details */}
       <View style={{marginTop: -(height * 0.09)}} className="space-y-3">
-        {/* title */}
         <Text className="text-white text-center text-3xl text-bold tracking-wider">
-          {movieName}
+          {/* {movieName} */}
+          {item?.title}
         </Text>
         {/* status, release date, runtime */}
-        <Text className="text-neutral-400 font-semibold text-base text-center">
-          Released • 2020 • 170 min
-        </Text>
+        {movie?.id ? (
+          <Text className="text-neutral-400 font-semibold text-base text-center">
+            {/* Released • 2020 • 170 min */}
+            {movie?.status} • {movie?.release_date?.split('-')[0]} •
+            {movie?.runtime} min
+          </Text>
+        ) : null}
 
         {/* genres */}
         <View className="flex-row justify-center mx-4 space-x-2">
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Action •
-          </Text>
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Thrill •
-          </Text>
-          <Text className="text-neutral-400 font-semibold text-base text-center">
-            Comedy
-          </Text>
+          {movie?.genres?.map((genre, index) => {
+            let showDot = index + 1 != movie?.genres?.length;
+            return (
+              <Text
+                key={index}
+                className="text-neutral-400 font-semibold text-base text-center">
+                {genre?.name} {showDot ? ' •' : null}
+              </Text>
+            );
+          })}
         </View>
 
         {/* description */}
         <Text className="text-neutral-400 mx-4 tracking-wide">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt
-          nostrum amet ab id nemo quibusdam voluptatum incidunt? Dolor officia
-          libero recusandae! Perspiciatis illo nesciunt architecto cupiditate
-          rerum ducimus illum explicabo?
+          {movie?.overview}
         </Text>
       </View>
-
       {/* cast */}
       <Cast navigation={navigation} cast={cast} />
-
       {/* similar movies */}
       <MovieList
         title="Similar Movies"
