@@ -39,19 +39,19 @@ const HomeScreen = () => {
 
   const getTrendingMovies = async () => {
     const data = await fetchTrendingMovies();
-    console.log(`Trending movies in homescreen=====>`, data);
+    // console.log(`Trending movies in homescreen=====>`, data);
     if (data?.results) setTrending(data?.results);
     setLoading(false);
   };
   const getUpcomingMovies = async () => {
     const data = await fetchUpcomingMovies();
-    console.log(`Upcoming movies in homescreen=====>`, data);
+    // console.log(`Upcoming movies in homescreen=====>`, data);
     if (data?.results) setUpcoming(data?.results);
     setLoading(false);
   };
   const getTopRatedMovies = async () => {
     const data = await fetchTopRatedMovies();
-    console.log(`Top Rated movies in homescreen=====>`, data);
+    // console.log(`Top Rated movies in homescreen=====>`, data);
     if (data?.results) setTopRated(data?.results);
     setLoading(false);
   };

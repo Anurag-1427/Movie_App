@@ -42,13 +42,13 @@ const PersonScreen = () => {
 
   const getPersonDetails = async id => {
     const data = await fetchPersonDetails(id);
-    console.log('got person details in person screen=====>');
+    // console.log('got person details in person screen=====>');
     setLoading(false);
     if (data) setPerson(data);
   };
   const getPersonMovies = async id => {
     const data = await fetchPersonMovies(id);
-    console.log('got person movies in person screen=====>');
+    // console.log('got person movies in person screen=====>');
     if (data?.cast) setPersonMovies(data?.cast);
   };
 

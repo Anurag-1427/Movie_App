@@ -15,7 +15,7 @@ import {fallbackMoviePoster, image185} from '../api/moviedb';
 var {width, height} = Dimensions.get('window');
 
 const MovieList = ({title, data, hideSeeAll}) => {
-  let movieName = 'Ant-Man and the Wasp: Quantumania';
+  //   let movieName = 'Ant-Man and the Wasp: Quantumania';
   const navigation = useNavigation();
 
   return (

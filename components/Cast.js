@@ -3,8 +3,8 @@ import React from 'react';
 import {fallbackPersonImage, image185} from '../api/moviedb';
 
 const Cast = ({cast, navigation}) => {
-  let personName = 'Keanu reevs';
-  let characterName = 'John Wick';
+  //   let personName = 'Keanu reevs';
+  //   let characterName = 'John Wick';
   return (
     <View className="my-6">
       <Text className="text-white text-lg mx-4 mb-5">Top Cast</Text>

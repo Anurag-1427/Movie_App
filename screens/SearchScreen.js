@@ -22,7 +22,7 @@ const SearchScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  let movieName = 'Ant-Man and the Wasp: Quantumania';
+  //   let movieName = 'Ant-Man and the Wasp: Quantumania';
 
   const handleSearch = value => {
     console.log(`value: `, value);

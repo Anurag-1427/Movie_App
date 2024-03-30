@@ -38,10 +38,10 @@ const MovieScreen = () => {
   const {params: item} = useRoute();
   const navigation = useNavigation();
 
-  let movieName = 'Ant-Man and the Wasp: Quantumania';
+  //   let movieName = 'Ant-Man and the Wasp: Quantumania';
 
   useEffect(() => {
-    console.log(`item id====>`, item?.id);
+    // console.log(`item id====>`, item?.id);
     getMovieDetails(item?.id);
     getMovieCredits(item?.id);
     getSimilarMovies(item?.id);
@@ -50,17 +50,17 @@ const MovieScreen = () => {
 
   const getMovieDetails = async id => {
     const data = await fetchMovieDetails(id);
-    console.log(`get movie details in movieScreen===>`, data);
+    // console.log(`get movie details in movieScreen===>`, data);
     if (data) setMovie(data);
   };
   const getMovieCredits = async id => {
     const data = await fetchMovieCredits(id);
-    console.log(`get movie credits in movieScreen===>`, data);
+    // console.log(`get movie credits in movieScreen===>`, data);
     if (data?.cast) setCast(data?.cast);
   };
   const getSimilarMovies = async id => {
     const data = await fetchSimilarMovies(id);
-    console.log(`get similar movies in movieScreen===>`, data);
+    // console.log(`get similar movies in movieScreen===>`, data);
     if (data?.results) setSimilarMovies(data?.results);
   };
 
