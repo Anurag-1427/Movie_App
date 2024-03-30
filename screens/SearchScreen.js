@@ -9,10 +9,12 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import Loading from '../components/Loading';
+import {debounce} from 'lodash';
+import {fallbackMoviePoster, image185, searchMovies} from '../api/moviedb';
 
 const {width, height} = Dimensions.get('window');
 
@@ -21,12 +23,34 @@ const SearchScreen = () => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   let movieName = 'Ant-Man and the Wasp: Quantumania';
+
+  const handleSearch = value => {
+    console.log(`value: `, value);
+    if (value?.length > 2) {
+      setLoading(true);
+      searchMovies({
+        query: value,
+        include_adult: 'false',
+        language: 'en-US',
+        page: '1',
+      }).then(data => {
+        setLoading(false);
+        console.log(`got movies====>`, data);
+        if (data?.results) setResults(data?.results);
+      });
+    } else {
+      setLoading(false);
+      setResults([]);
+    }
+  };
+  const handleTextDebounce = useCallback(debounce(handleSearch, 400), []);
+
   return (
     <SafeAreaView className="bg-neutral-800 flex-1">
       {/* search input */}
       <View className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
         <TextInput
-          //   onChangeText={handleTextDebounce}
+          onChangeText={handleTextDebounce}
           placeholder="Search Movie"
           placeholderTextColor={'lightgray'}
           className="pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider"
@@ -56,22 +80,20 @@ const SearchScreen = () => {
                   onPress={() => navigation.push('Movie', item)}>
                   <View className="space-y-2 mb-4">
                     <Image
-                      // source={{
-                      //   uri:
-                      //     image185(item.poster_path) ||
-                      //     fallbackMoviePoster,
-                      // }}
-                      source={require('../assets/images/moviePoster2.png')}
+                      source={{
+                        uri: image185(item.poster_path) || fallbackMoviePoster,
+                      }}
+                      //   source={require('../assets/images/moviePoster2.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />
                     <Text className="text-gray-300 ml-1 text-center">
-                      {/* {item.title.length > 22
-                      ? item.title.slice(0, 22) + '...'
-                      : item.title} */}
-                      {movieName.length > 22
+                      {item.title.length > 22
+                        ? item.title.slice(0, 22) + '...'
+                        : item.title}
+                      {/* {movieName.length > 22
                         ? movieName.slice(0, 22) + '...'
-                        : movieName}
+                        : movieName} */}
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>
