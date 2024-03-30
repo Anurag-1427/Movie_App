@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {XMarkIcon} from 'react-native-heroicons/outline';
 import Loading from '../components/Loading';
 import {debounce} from 'lodash';
@@ -19,12 +19,12 @@ import {fallbackMoviePoster, image185, searchMovies} from '../api/moviedb';
 const {width, height} = Dimensions.get('window');
 
 const SearchScreen = () => {
-  const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState([]);
+  const navigation = useNavigation<NavigationProp<any>>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [results, setResults] = useState<any[]>([]);
   //   let movieName = 'Ant-Man and the Wasp: Quantumania';
 
-  const handleSearch = value => {
+  const handleSearch = (value: string) => {
     console.log(`value: `, value);
     if (value?.length > 2) {
       setLoading(true);
@@ -81,16 +81,16 @@ const SearchScreen = () => {
                   <View className="space-y-2 mb-4">
                     <Image
                       source={{
-                        uri: image185(item.poster_path) || fallbackMoviePoster,
+                        uri: image185(item?.poster_path) || fallbackMoviePoster,
                       }}
                       //   source={require('../assets/images/moviePoster2.png')}
                       className="rounded-3xl"
                       style={{width: width * 0.44, height: height * 0.3}}
                     />
                     <Text className="text-gray-300 ml-1 text-center">
-                      {item.title.length > 22
-                        ? item.title.slice(0, 22) + '...'
-                        : item.title}
+                      {item?.title.length > 22
+                        ? item?.title.slice(0, 22) + '...'
+                        : item?.title}
                       {/* {movieName.length > 22
                         ? movieName.slice(0, 22) + '...'
                         : movieName} */}

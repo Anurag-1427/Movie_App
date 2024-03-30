@@ -5,6 +5,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -25,10 +26,10 @@ import {
 const ios = Platform.OS == 'ios';
 
 const HomeScreen = () => {
-  const [trending, setTrending] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
-  const [topRated, setTopRated] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [trending, setTrending] = useState<any[]>([]);
+  const [upcoming, setUpcoming] = useState<any[]>([]);
+  const [topRated, setTopRated] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigation = useNavigation();
 
   useEffect(() => {

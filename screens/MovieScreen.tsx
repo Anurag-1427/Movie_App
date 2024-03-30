@@ -9,7 +9,11 @@ import {
   Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {HeartIcon} from 'react-native-heroicons/solid';
 import {styles, theme} from '../theme';
@@ -30,35 +34,36 @@ const ios = Platform.OS == 'ios';
 const topMargin = ios ? '' : ' mt-3';
 
 const MovieScreen = () => {
-  const [isFavourite, toggleFavourite] = useState(false);
-  const [cast, setCast] = useState([]);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isFavourite, toggleFavourite] = useState<boolean>(false);
+  const [cast, setCast] = useState<any[]>([]);
+  const [similarMovies, setSimilarMovies] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [movie, setMovie] = useState({});
   const {params: item} = useRoute();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   //   let movieName = 'Ant-Man and the Wasp: Quantumania';
 
   useEffect(() => {
-    // console.log(`item id====>`, item?.id);
+    console.log(`item id====>`, item?.id);
+    console.log(`item id type====>`, typeof item?.id);
     getMovieDetails(item?.id);
     getMovieCredits(item?.id);
     getSimilarMovies(item?.id);
     setLoading(false);
   }, [item]);
 
-  const getMovieDetails = async id => {
+  const getMovieDetails = async (id: number) => {
     const data = await fetchMovieDetails(id);
     // console.log(`get movie details in movieScreen===>`, data);
     if (data) setMovie(data);
   };
-  const getMovieCredits = async id => {
+  const getMovieCredits = async (id: number) => {
     const data = await fetchMovieCredits(id);
     // console.log(`get movie credits in movieScreen===>`, data);
     if (data?.cast) setCast(data?.cast);
   };
-  const getSimilarMovies = async id => {
+  const getSimilarMovies = async (id: number) => {
     const data = await fetchSimilarMovies(id);
     // console.log(`get similar movies in movieScreen===>`, data);
     if (data?.results) setSimilarMovies(data?.results);

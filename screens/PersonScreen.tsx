@@ -11,7 +11,11 @@ import {
 import React, {useEffect, useState} from 'react';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {HeartIcon} from 'react-native-heroicons/solid';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {styles} from '../theme';
 import MovieList from '../components/MovieList';
 import Loading from '../components/Loading';
@@ -28,11 +32,11 @@ const verticalMargin = ios ? '' : ' my-3';
 
 const PersonScreen = () => {
   const {params: item} = useRoute();
-  const [isFavourite, toggleFavourite] = useState(false);
-  const navigation = useNavigation();
+  const [isFavourite, toggleFavourite] = useState<boolean>(false);
+  const navigation = useNavigation<NavigationProp<any>>();
   const [person, setPerson] = useState({});
-  const [personMovies, setPersonMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [personMovies, setPersonMovies] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
