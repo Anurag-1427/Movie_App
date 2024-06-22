@@ -25,6 +25,7 @@ import {
   fetchPersonMovies,
   image342,
 } from '../api/moviedb';
+import {assets} from '../assets';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
@@ -116,31 +117,42 @@ const PersonScreen = () => {
           {/* statistics of a person */}
           <View className="mx-3 p-4 mt-6 flex-row justify-between items-center bg-neutral-700 rounded-full ">
             <View className="border-r-2 border-r-neutral-400 px-3 items-center">
-              <Text className="text-white font-semibold ">Gender</Text>
+              <Text className="text-white font-semibold ">
+                {assets.strings['GENDER_TEXT']}
+              </Text>
               <Text className="text-neutral-300 text-sm">
                 {/* Male */}
-                {person?.gender == 1 ? 'Female' : 'Male'}
+                {person?.gender == 1
+                  ? assets.strings['GENDER_FEMALE']
+                  : assets.strings['GENDER_MALE']}
               </Text>
             </View>
             <View className="border-r-2 border-r-neutral-400 px-3 items-center">
-              <Text className="text-white font-semibold">Birthday</Text>
+              <Text className="text-white font-semibold">
+                {assets.strings['BIRTHDAY_TEXT']}
+              </Text>
               <Text className="text-neutral-300 text-sm">
                 {/* 1964-09-02 */}
                 {person?.birthday}
               </Text>
             </View>
             <View className="border-r-2 border-r-neutral-400 px-3 items-center">
-              <Text className="text-white font-semibold">Known for</Text>
+              <Text className="text-white font-semibold">
+                {assets.strings['KNOWN_FOR_TEXT']}
+              </Text>
               <Text className="text-neutral-300 text-sm">
                 {/* Acting */}
                 {person?.known_for_department}
               </Text>
             </View>
             <View className="px-2 items-center">
-              <Text className="text-white font-semibold">Popularity</Text>
+              <Text className="text-white font-semibold">
+                {assets.strings['POPULARITY_TEXT']}
+              </Text>
               <Text className="text-neutral-300 text-sm">
                 {/* 84.23 % */}
-                {person?.popularity?.toFixed(2)} %
+                {person?.popularity?.toFixed(2)}{' '}
+                {assets.strings['PERCENT_SIGN']}
               </Text>
             </View>
           </View>
@@ -148,7 +160,7 @@ const PersonScreen = () => {
           <View className="my-6 mx-4 space-y-2">
             <Text className="text-white text-lg">Biography</Text>
             <Text className="text-neutral-400 tracking-wide">
-              {person?.biography ? person.biography : 'N/A'}
+              {person?.biography ? person.biography : assets.strings['NA_TEXT']}
             </Text>
           </View>
           {/* person movies list */}

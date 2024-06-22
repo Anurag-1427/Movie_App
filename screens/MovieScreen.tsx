@@ -28,6 +28,7 @@ import {
   fetchSimilarMovies,
   image500,
 } from '../api/moviedb';
+import {assets} from '../assets';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
@@ -123,7 +124,7 @@ const MovieScreen = () => {
           <Text className="text-neutral-400 font-semibold text-base text-center">
             {/* Released • 2020 • 170 min */}
             {movie?.status} • {movie?.release_date?.split('-')[0]} •
-            {movie?.runtime} min
+            {movie?.runtime} {` ${assets.strings['MIN_TEXT']}`}
           </Text>
         ) : null}
 
@@ -151,7 +152,7 @@ const MovieScreen = () => {
       {/* similar movies */}
       {similarMovies?.length > 0 && (
         <MovieList
-          title="Similar Movies"
+          title={assets.strings['SIMILAR_MOVIES_TITLE']}
           hideSeeAll={true}
           data={similarMovies}
         />

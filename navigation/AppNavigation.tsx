@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import MovieScreen from '../screens/MovieScreen';
 import PersonScreen from '../screens/PersonScreen';
 import SearchScreen from '../screens/SearchScreen';
+import {ROUTES} from './route';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,22 +14,22 @@ const AppNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          name="Home"
+          name={ROUTES.HOME}
           options={{headerShown: false}}
           component={HomeScreen}
         />
         <Stack.Screen
-          name="Movie"
+          name={ROUTES.MOVIE}
           options={{headerShown: false}}
           component={MovieScreen}
         />
         <Stack.Screen
-          name="Person"
+          name={ROUTES.PERSON}
           options={{headerShown: false}}
           component={PersonScreen}
         />
         <Stack.Screen
-          name="Search"
+          name={ROUTES.SEARCH}
           options={{headerShown: false}}
           component={SearchScreen}
         />

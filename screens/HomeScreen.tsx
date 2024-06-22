@@ -22,6 +22,7 @@ import {
   fetchTrendingMovies,
   fetchUpcomingMovies,
 } from '../api/moviedb';
+import {assets} from '../assets';
 
 const ios = Platform.OS == 'ios';
 
@@ -66,7 +67,10 @@ const HomeScreen = () => {
           {/* <Bars3CenterLeftIcon size="30" strokeWidth={2} color="white" /> */}
           <Text className="text-3xl">🎬</Text>
           <Text className="text-white text-3xl font-bold">
-            <Text style={styles.text}> M</Text>ovies App
+            <Text style={styles.text}>
+              {` ${assets.strings['HEADER_TITLE_M_ONE']}`}
+            </Text>
+            {assets.strings['HEADER_TITLE_REST']}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <MagnifyingGlassIcon size="30" strokeWidth={2} color="white" />
@@ -83,10 +87,18 @@ const HomeScreen = () => {
           {trending.length > 0 && <TrendingMovies data={trending} />}
 
           {/* upcoming movies row */}
-          <MovieList hideSeeAll={false} title="Upcoming" data={upcoming} />
+          <MovieList
+            hideSeeAll={false}
+            title={assets.strings['UPCOMING_TITLE']}
+            data={upcoming}
+          />
 
           {/* top rated movies row */}
-          <MovieList hideSeeAll={false} title="Top Rated" data={topRated} />
+          <MovieList
+            hideSeeAll={false}
+            title={assets.strings['TOP_RATED_TITLE']}
+            data={topRated}
+          />
         </ScrollView>
       )}
     </View>

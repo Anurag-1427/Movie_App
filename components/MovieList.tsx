@@ -11,6 +11,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../theme';
 import {fallbackMoviePoster, image185} from '../api/moviedb';
+import {assets} from '../assets';
 
 var {width, height} = Dimensions.get('window');
 
@@ -25,7 +26,7 @@ const MovieList = ({title, data, hideSeeAll}) => {
         {!hideSeeAll && (
           <TouchableOpacity>
             <Text style={styles.text} className="text-lg">
-              See All
+              {assets.strings['SEE_ALL']}
             </Text>
           </TouchableOpacity>
         )}

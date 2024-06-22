@@ -15,6 +15,7 @@ import {XMarkIcon} from 'react-native-heroicons/outline';
 import Loading from '../components/Loading';
 import {debounce} from 'lodash';
 import {fallbackMoviePoster, image185, searchMovies} from '../api/moviedb';
+import {assets} from '../assets';
 
 const {width, height} = Dimensions.get('window');
 
@@ -51,7 +52,7 @@ const SearchScreen = () => {
       <View className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full">
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder="Search Movie"
+          placeholder={assets.strings['SEARCH_MOVIE_PLACEHOLDER']}
           placeholderTextColor={'lightgray'}
           className="pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider"
         />
@@ -70,7 +71,7 @@ const SearchScreen = () => {
           contentContainerStyle={{paddingHorizontal: 15}}
           className="space-y-3">
           <Text className="text-white font-semibold ml-1">
-            Results ({results.length})
+            {assets.strings['RESULTS_TEXT']} ({results.length})
           </Text>
           <View className="flex-row justify-between flex-wrap">
             {results.map((item, index) => {
